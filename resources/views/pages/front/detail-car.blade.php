@@ -335,7 +335,7 @@
                 </div>
             </div>
             
-            {{ dd($data->user->detail->latitude) }}
+            {{-- {{ dd($data->user->detail->latitude) }} --}}
         </div>
     </div>
 </div>
@@ -360,7 +360,6 @@
     const lat = localStorage.getItem('latitude');
     const long = localStorage.getItem('longitude');
 
-    console.log(lat+' - '+long);
 
     $.ajax({
         url: '{{ url("api/getDistance") }}',
@@ -377,8 +376,10 @@
         }
     })
     function initMap() {
+    console.log(lat+' - '+long);
+
         var pointA = new google.maps.LatLng(lat, long),
-            pointB = new google.maps.LatLng({{ $data->user->detail->latitude}},{{ $data->user->detail->longitude}}),
+            pointB = new google.maps.LatLng({{ $data->user->detail->latitude }},{{ $data->user->detail->longitude }}),
             myOptions = {
             zoom: 20,
             center: pointA
