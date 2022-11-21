@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Category;
 use App\Services\Tenant\CarService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
@@ -23,8 +24,6 @@ class CarController extends Controller
 
         $category = Category::get();
 
-        // dd(Car::with('user')->get());
-
         return view('pages.admin.car.index', [
             'title' => $title,
             'category' => $category,
@@ -33,9 +32,9 @@ class CarController extends Controller
 
     public function ajax(Request $request)
     {
+        // ajax Serverside
         if ($request->ajax()) {
-            $data = Car::query()->with('user', 'categories')->where('is_deleted', NULL)->latest();
-            // dd($data);
+            $data = Car::query()->with('user', 'categories')->where('user_id', Auth::user()->id)->where('is_deleted', NULL)->latest();
             return datatables()->of($data)
                 ->addIndexColumn()
                 ->editColumn('price_car', function ($row) {
@@ -48,18 +47,13 @@ class CarController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        # code...
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $response = $this->carService->storeCar($request->all());
 
-        // dd($response);
-
         if ($response['status']) {
-            # code...
             return back()->withSuccess($response['message']);
         } else {
             return back()->withError($response['message']);

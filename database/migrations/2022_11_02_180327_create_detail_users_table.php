@@ -21,10 +21,11 @@ return new class extends Migration
             $table->string('identity_number');
             $table->date('dob');
             $table->string('pob');
-            $table->integer('address');
-            $table->integer('villages');
+            $table->string('address');
+            $table->integer('state');
             $table->integer('city');
-            $table->string('state');
+            $table->integer('district');
+            $table->bigInteger('villages');
             $table->string('phone_number_1');
             $table->string('phone_number_2')->nullable();
             $table->string('latitude');

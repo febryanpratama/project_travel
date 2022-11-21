@@ -1,4 +1,4 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme bg-light" style="background-color: white;box-shadow: 1px 1px;">
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
@@ -127,6 +127,15 @@
             </ul>
         </li>
 
+        @role('Tenant')
+        <li class="menu-item">
+            <a href="{{ url('tenant/transactions') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="Transactions">Transactions</div>
+            </a>
+        </li>
+        @endrole
+
         <!-- Master Data -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
         <!-- Cards -->
@@ -155,7 +164,7 @@
                     </a>
                 </li>
                 @endrole
-                <li class="menu-item">
+                {{-- <li class="menu-item">
                     <a href="{{ url("admin/user") }}" class="menu-link">
                         <div data-i18n="User">User</div>
                     </a>
@@ -164,12 +173,12 @@
                     <a href="{{ url("admin/owner") }}" class="menu-link">
                         <div data-i18n="Owner">Owner</div>
                     </a>
-                </li>
-                <li class="menu-item">
+                </li> --}}
+                {{-- <li class="menu-item">
                     <a href="cards-actions.html" class="menu-link">
                         <div data-i18n="Actions">Actions</div>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
 

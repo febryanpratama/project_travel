@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Tenant\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,14 @@ Route::group([
 ], function () {
     Route::get('/', 'index');
 
+    Route::get('/car/{id}/detail', 'detailCar');
+    // Route::get('/car/{id}/rent', 'rentCar');
+    Route::post('/car/rent', 'storeRentCar');
+
+    // Checkout
+    Route::get('/checkout', 'checkout');
+
+    // Daftar
     Route::get('/signup', 'signup');
     Route::post('/signup', 'storeSignup');
 });
@@ -70,6 +79,13 @@ Route::prefix('tenant')->middleware('auth', 'role:Tenant')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::get('/ajax', 'ajax');
+    });
+
+    Route::group([
+        'prefix' => 'transactions',
+        'controller' => TransactionController::class,
+    ], function () {
+        Route::get('/', 'index');
     });
 });
 

@@ -117,6 +117,9 @@
     <script src="{{ url('') }}/admin/assets/js/config.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.8/sweetalert2.css" integrity="sha512-JzSVRb7c802/njMbV97pjo1wuJAE/6v9CvthGTDxiaZij/TFpPQmQPTcdXyUVucsvLtJBT6YwRb5LhVxX3pQHQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {{-- <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' /> --}}
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -133,6 +136,18 @@
       gtag("js", new Date());
       gtag("config", "GA_MEASUREMENT_ID");
     </script>
+
+    <style>
+        .text-center {
+            text-align: center;
+        }
+        #map {
+            width: '100%';
+            height: 400px;
+        }
+    </style>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
+
     <!-- Custom notification for demo -->
     <!-- beautify ignore:end -->
 </head>
@@ -237,8 +252,10 @@
                 </div> --}}
               </div>
               <div class="bs-stepper-content pt-4">
-                <form id="multiStepsForm" method="POST" action="{{ url("signup") }}" >
-                    @csrf
+                <form id="multiStepsForm" method="POST" action="{{ url("signup") }}" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="latitude" id="latitude">
+                  <input type="hidden" name="longitude" id="longitude">
                   <!-- Account Details -->
                   <div id="accountDetailsValidation" class="content">
                     <div class="content-header mb-3">
@@ -314,7 +331,7 @@
                       <div class="col-sm-6">
                         <label class="form-label" for="identity_number">Identity Number</label>
                         <input type="text" id="identity_number" name="identity_number"
-                          class="form-control" placeholder="Identity Number" maxlength="6" />
+                          class="form-control" placeholder="Identity Number" />
                       </div>
                       <div class="col-sm-6">
                         <label class="form-label" for="dob">Date Of Birth</label>
@@ -324,42 +341,56 @@
                       <div class="col-sm-6">
                         <label class="form-label" for="pob">Place Of Birth</label>
                         <input type="text" id="pob" name="pob"
-                          class="form-control" placeholder="Place Of Birth" maxlength="6" />
+                          class="form-control" placeholder="Place Of Birth"/>
                       </div>
                       <div class="col-sm-6">
                         <label class="form-label" for="pob">State</label>
-                        <select name="state" id="" class="form-control">
+                        <select name="state" id="state" class="form-control">
                             <option value="" selected disabled> == Pilih == </option>
-                            <option value=""></option>
+                            @foreach ($state as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
                         </select>
                       </div>
 
                       <div class="col-sm-6">
                         <label class="form-label" for="pob">City</label>
-                        <select name="city" id="" class="form-control">
+                        <select name="city" id="city" class="form-control">
                             <option value="" selected disabled> == Pilih == </option>
-                            <option value=""></option>
+                            <div id="cities">
+
+                            </div>
+                        </select>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="form-label" for="pob">District</label>
+                        <select name="district" id="district" class="form-control">
+                            <option value="" selected disabled> == Pilih == </option>
+                            
                         </select>
                       </div>
 
                       <div class="col-sm-6">
                         <label class="form-label" for="pob">Villages</label>
-                        <select name="villages" id="" class="form-control">
+                        <select name="villages" id="villages" class="form-control">
                             <option value="" selected disabled> == Pilih == </option>
-                            <option value=""></option>
+
                         </select>
                       </div>
 
                       <div class="col-sm-12">
                         <label class="form-label" for="pob">Address</label>
-                        <textarea name="address" id="" class="form-control" cols="30" rows="10"></textarea>
+                        <textarea name="address" class="form-control" cols="30" rows="10"></textarea>
+                      </div>
+                      <div class="col-sm-12">
+                        <div id='map'></div>
                       </div>
                       
                       <div class="col-sm-6">
                         <label class="form-label" for="phone_number_1">Phone Number 1</label>
                         <div class="input-group input-group-merge">
                           <span class="input-group-text">ID (+62)</span>
-                          <input type="text" id="phone_number_1" name="phone_number_1"
+                          <input type="text" name="phone_number_1"
                             class="form-control multi-steps-mobile" placeholder="8123513555" />
                         </div>
                       </div>
@@ -549,50 +580,184 @@
   <!-- Page JS -->
   <script src="{{ url('') }}/admin/assets/js/pages-auth-multisteps.js"></script>
   <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+  {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.8/sweetalert2.min.js" integrity="sha512-c1AfYKag4intaizqJC0Zx1NxImYP7B2namyOLbpFW3P12oYkZjQGQ/8r6N75SlWidbm7oQElnVZqBzRvFtU0Hw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  
+  {{-- <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script> --}}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM&callback=initMap&v=weekly" defer></script>
+
 
 
   <script>
-        $(document).ready(function(){
-            // Basic
-            $('.dropify').dropify();
+      $(document).ready(function(){
 
-            // Translated
-            $('.dropify-fr').dropify({
-                messages: {
-                    default: 'Glissez-déposez un fichier ici ou cliquez',
-                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
-                    remove:  'Supprimer',
-                    error:   'Désolé, le fichier trop volumineux'
+        // Swal.fire(
+        // 'Good job!',
+        // 'You clicked the button!',
+        // 'success'
+        // )
+          // Basic
+          $('.dropify').dropify();
+
+          // Translated
+          $('.dropify-fr').dropify({
+              messages: {
+                  default: 'Glissez-déposez un fichier ici ou cliquez',
+                  replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                  remove:  'Supprimer',
+                  error:   'Désolé, le fichier trop volumineux'
+              }
+          });
+
+          $('#state').on('change', function() {
+            $('#city').html('');
+            $('#district').html('');
+            $('#ville').html('');
+            let province_id = this.value;
+            $.ajax({
+                url: "{{ url('') }}/api/city/"+province_id,
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    // console.log(data);
+                    if (result.status == true) {
+                      console.log("ok")
+                      var html = '';
+
+                      $.each(result.data, function(index){
+                        $('#city').append('<option value="'+result.data[index].id+'">'+result.data[index].name+'</option>');
+                      })
                 }
-            });
+            }
+          })
+          })
+          
+          $('#city').on('change', function() {
+            $('#district').html('');
+            $('#villages').html('');
+            let city_id = this.value;
+              $.ajax({
+                  url: "{{ url('') }}/api/district/"+city_id,
+                  type: "GET",
+                  dataType: "json",
+                  success: function (result) {
+                      // console.log(data);
+                      if (result.status == true) {
+                        console.log("city")
+                        var html = '';
 
-            // Used events
-            var drEvent = $('#input-file-events').dropify();
-
-            drEvent.on('dropify.beforeClear', function(event, element){
-                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
-            });
-
-            drEvent.on('dropify.afterClear', function(event, element){
-                alert('File deleted');
-            });
-
-            drEvent.on('dropify.errors', function(event, element){
-                console.log('Has Errors');
-            });
-
-            var drDestroy = $('#input-file-to-destroy').dropify();
-            drDestroy = drDestroy.data('dropify')
-            $('#toggleDropify').on('click', function(e){
-                e.preventDefault();
-                if (drDestroy.isDropified()) {
-                    drDestroy.destroy();
-                } else {
-                    drDestroy.init();
-                }
+                        $.each(result.data, function(index){
+                          $('#district').append('<option value="'+result.data[index].id+'">'+result.data[index].name+'</option>');
+                        })
+                  }
+              }
             })
-        });
-    </script>
+          })
+          ;
+
+
+          $('#district').on('change', function(){
+            $('#villages').html('');
+            let district_id = this.value;
+            $.ajax({
+                url: "{{ url('') }}/api/village/"+district_id,
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    // console.log(data);
+                    if (result.status == true) {
+                      console.log("district")
+                      var html = '';
+
+                      $.each(result.data, function(index){
+                        $('#villages').append('<option value="'+result.data[index].id+'">'+result.data[index].name+'</option>');
+                      })
+                }
+            }
+          })
+          })
+
+      });
+  </script>
+
+
+  {{-- <script>
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
+            var coords = new google.maps.LatLng(latitude, longitude);
+            var mapOptions = {
+                zoom: 15,
+                center: coords,
+                mapTypeControl: true,
+                navigationControlOptions: {
+                    style: google.maps.NavigationControlStyle.SMALL
+                },
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            $('#latitude').val(latitude);
+            $('#longitude').val(longitude);
+
+            localstorage.setItem('latitude', latitude);
+            localstorage.setItem('longitude', longitude);
+
+
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var marker = new google.maps.Marker({
+                position: coords,
+                map: map,
+                title: "ok"
+            });
+
+        },
+        function error(msg) {
+          // console.log(msg);
+                  Swal.fire({
+                    title: 'Location Not Allowed',
+                    text: "Please turn on your location",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.reload();
+                    }
+                  })
+
+                  // window.location.reload();
+        },
+        {
+          maximumAge:10000, 
+          timeout:5000, 
+          enableHighAccuracy: true
+        }
+      );
+    } else {
+        alert("Geolocation API is not supported in your browser.");
+    }
+
+    navigator.permissions && navigator.permissions.query({name: 'geolocation'})
+      .then(function(PermissionStatus) {
+          if (PermissionStatus.state == 'granted') {
+                //allowed
+                // console.log("allowed");
+          } else if (PermissionStatus.state == 'prompt') {
+                // prompt - not yet grated or denied
+                // console.log("prompt");
+          } else {
+              //denied
+              //  console.log("denied");
+          }
+      })
+
+</script> --}}
 </body>
 
 <!-- Mirrored from pixinvent.com/demo/frest-clean-bootstrap-admin-dashboard-template/html/vertical-menu-template-bordered/auth-register-multisteps.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Nov 2022 12:03:05 GMT -->
