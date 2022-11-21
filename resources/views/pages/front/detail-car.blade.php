@@ -335,6 +335,7 @@
                 </div>
             </div>
             
+            {{ dd($data->user->detail->latitude) }}
         </div>
     </div>
 </div>
