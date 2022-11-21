@@ -378,7 +378,7 @@
     function initMap() {
     console.log(lat+' - '+long);
 
-        var pointA = new google.maps.LatLng(lat, long),
+        var pointA = new google.maps.LatLng(localStorage.getItem('latitude'), localStorage.getItem('longitude')),
             pointB = new google.maps.LatLng({{ $data->user->detail->latitude }},{{ $data->user->detail->longitude }}),
             myOptions = {
             zoom: 20,
