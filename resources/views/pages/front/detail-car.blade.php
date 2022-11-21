@@ -356,9 +356,10 @@
 
 <script>
 
-    // $(document)
     const lat = localStorage.getItem('latitude');
     const long = localStorage.getItem('longitude');
+
+    console.log(lat+' - '+long);
 
     $.ajax({
         url: '{{ url("api/getDistance") }}',
