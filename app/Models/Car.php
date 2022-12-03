@@ -25,4 +25,9 @@ class Car extends Model
     {
         return $this->hasMany(CarPhoto::class, 'car_id');
     }
+
+    public function rating()
+    {
+        return $this->hasMany(Rating::class, 'car_id');
+    }
 }

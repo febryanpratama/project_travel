@@ -124,7 +124,7 @@ class FrontService
 
     public function detailCar($car_id)
     {
-        $data = Car::with('user', 'photo', 'categories', 'user.detail')->where('id', decrypt($car_id))->first();
+        $data = Car::with('user', 'photo', 'categories', 'user.detail', 'rating', 'rating.user')->where('id', decrypt($car_id))->first();
 
         // dd($data);
         return (object)[
@@ -307,6 +307,7 @@ class FrontService
                 $transaction = Transaction::create([
                     'user_id' => $cart->borrower_id,
                     'car_id' => $cart->car_id,
+                    'cart_id' => $cart->id,
                     'reference' => $api->data->reference,
                     'merchant_ref' => $api->data->merchant_ref,
                     'payment_method' => $api->data->payment_method,
@@ -372,7 +373,6 @@ class FrontService
         ]);
 
         if ($validator->fails()) {
-            // dd($validator->errors()->first());
             abort(401);
         }
         # code...
@@ -384,7 +384,7 @@ class FrontService
         return [
             'status' => true,
             'message' => 'Your request has been processed successfully',
-            'data' => null
+            'data' => $data['tripay_merchant_ref']
         ];
     }
 }

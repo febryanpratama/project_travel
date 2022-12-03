@@ -50,7 +50,7 @@
 			<div class="x_car_donr_main_box_wrapper_inner">
 				<div class="order-done"> <i class="icon-checked"><img src="images/icon-checked.png" alt=""></i>
 					<h4>thank you! Order has been received</h4>
-					<h4>Order number: <span>#887768</span></h4>
+					<h4>Order number: <span>{{ $data }}</span></h4>
 					<hr>
 					<div class="contect_btn contect_btn_contact">
 						<ul>

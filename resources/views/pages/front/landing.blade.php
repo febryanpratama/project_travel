@@ -226,11 +226,16 @@
                         @foreach ($cars as $item)
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="x_car_offer_main_boxes_wrapper float_left">
-                                <div class="x_car_offer_starts float_left">	<i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                <div class="x_car_offer_starts float_left">	
+                                    <i class="fa fa-star{{ (App\Helpers\Format::countRating($item->id) >= 1 ? '' : '-o') }}"></i>
+                                    <i class="fa fa-star{{ (App\Helpers\Format::countRating($item->id) >= 1 ? '' : '-o') }}"></i>
+                                    <i class="fa fa-star{{ (App\Helpers\Format::countRating($item->id) >= 1 ? '' : '-o') }}"></i>
+                                    <i class="fa fa-star{{ (App\Helpers\Format::countRating($item->id) >= 1 ? '' : '-o') }}"></i>
+                                    <i class="fa fa-star{{ (App\Helpers\Format::countRating($item->id) >= 1 ? '' : '-o') }}"></i>
+                                    {{-- <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i> --}}
                                 </div>
                                 <div class="x_car_offer_img float_left">
                                     <img src="{{ asset('') }}images/cars/{{ $item->photo[0]->photo_path }}" class="img-fluid" alt="img">

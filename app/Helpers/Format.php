@@ -4,7 +4,9 @@ namespace App\Helpers;
 
 use App\Models\CarPhoto;
 use App\Models\Cart;
+use App\Models\Rating;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class Format
@@ -72,5 +74,39 @@ class Format
         //     'distance' => $distance,
         //     'time' => $time
         // ];
+    }
+
+    static function checkRating($rental_id)
+    {
+        $rating = Rating::where('rental_id', $rental_id)->where('user_id', Auth::user()->id)->first();
+
+        return $rating;
+    }
+
+    static function countRating($car_id)
+    {
+        $rating = Rating::where('car_id', $car_id)->get();
+
+        if ($rating->isEmpty()) {
+            # code...
+            return 0;
+        }
+
+        $cRating = Rating::where('car_id', $car_id)->count();
+
+        // dd($cRating);
+
+        $sRating = Rating::where('car_id', $car_id)->sum('rating');
+
+        $avgRating = $sRating / $cRating;
+        return $avgRating;
+    }
+
+    static function countRiview($car_id)
+    {
+        $rating = Rating::where('car_id', $car_id)->count();
+
+
+        return $rating;
     }
 }

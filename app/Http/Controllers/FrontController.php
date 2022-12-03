@@ -133,7 +133,13 @@ class FrontController extends Controller
         // $response = $this->frontService->responsePayment($request->all());
         $response = $this->frontService->responsePayment($request->all());
 
-        return redirecT('/success-checkout');
+        // return redirect('/success-checkout', [
+        //     'data' => $response['data']
+        // ]);
+        return view('pages.front.success-checkout', [
+            'data' => $response['data']
+        ]);
+
         // if ($ip == '95.111.200.230' || $ip == '127.0.0.1') {
         //     # code...
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Tenant\RentalController;
 use App\Http\Controllers\Tenant\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -96,6 +97,19 @@ Route::prefix('tenant')->middleware('auth', 'role:Tenant')->group(function () {
         'controller' => TransactionController::class,
     ], function () {
         Route::get('/', 'index');
+    });
+
+    Route::group([
+        'prefix' => 'rental',
+        'controller' => RentalController::class,
+    ], function () {
+        Route::get('/', 'index');
+        Route::get('/detail/{transaction_id}', 'detail');
+
+        Route::get('/take-car/{rental_id}', 'takeCar');
+        Route::get('/rent-car/{rental_id}', 'rentCar');
+        Route::get('/return-car/{rental_id}', 'returnCar');
+        Route::post('/rating', 'addRating');
     });
 });
 

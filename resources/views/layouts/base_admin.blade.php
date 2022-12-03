@@ -93,6 +93,11 @@
         </script>
         <!-- Custom notification for demo -->
         <!-- beautify ignore:end -->
+        <style>
+            .checked {
+                color: orange;
+            }
+        </style>
     </head>
 
     <body>

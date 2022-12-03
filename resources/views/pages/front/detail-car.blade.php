@@ -71,189 +71,190 @@
 {{-- {{ dd($data) }} --}}
 <!-- x tittle num Wrapper End -->
 <!-- x car book sidebar section Wrapper Start -->
-<div class="x_car_book_sider_main_Wrapper float_left">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12">
-                <div class="col-md-12">
-                <div class="x_car_detail_main_wrapper float_left">
-                    <div class="lr_bc_slider_first_wrapper">
-                        <div class="owl-carousel owl-theme">
-                            @foreach ($data->photo as $item) {{-- {{ dd($item) }} --}}
-                            <div class="item">
-                                <div class="lr_bc_slider_img_wrapper">
-                                    <img src="{{ asset('') }}images/cars/{{ $item->photo_path }}" alt="fresh_food_img" />
+        <div class="x_car_book_sider_main_Wrapper float_left">
+            <div class="container">
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12">
+                            <div class="col-md-12">
+                            <div class="x_car_detail_main_wrapper float_left">
+                                <div class="lr_bc_slider_first_wrapper">
+                                    <div class="owl-carousel owl-theme">
+                                        @foreach ($data->photo as $item) {{-- {{ dd($item) }} --}}
+                                        <div class="item">
+                                            <div class="lr_bc_slider_img_wrapper">
+                                                <img src="{{ asset('') }}images/cars/{{ $item->photo_path }}" alt="fresh_food_img" />
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="x_car_detail_slider_bottom_cont float_left">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div id='map'></div>
+                                <div class="x_car_detail_slider_bottom_cont float_left">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div id='map'></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="x_car_detail_slider_bottom_cont float_left">
-                        <div class="x_car_detail_slider_bottom_cont_left">
-                            <h3>{{ $data->name_car }}</h3>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                            <span>0 Reviews / <span id="rev"></span></span>
-                            {{-- <span>/ 3 Km</span> --}}
-                        </div>
-                        <div class="x_car_detail_slider_bottom_cont_right">
-                            <h3>{{ App\Helpers\Format::rupiahFront($data->price_car) }}k</h3>
-                            <p>
-                                <span>from</span> <br />
-                                / day
-                            </p>
-                        </div>
-                        <div class="x_car_detail_slider_bottom_cont_center float_left">
-                            <p>
-                                Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, rem a quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Dssed odio sit amet nibh vulputate cursus a sit
-                                amt mauris. Morbi accumsan ipsum velit.
-                                <br />
-                                <br />
-                                This is Photoshop's version of Lorem Ipsum. Proin gravida n vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum tor. This is Photoshop's version of Lorem Ipsum.
-                            </p>
-                        </div>
-                        <div class="x_car_offer_heading x_car_offer_heading_listing float_left x_car_offer_heading_inner_car_names x_car_offer_heading_inner_car_names2">
-                            <ul class="">
-                                <li>
-                                    <a href="#"><i class="fa fa-users"></i> &nbsp;{{ $data->seat_car }} Seats</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-clone"></i> &nbsp;{{ $data->door_car }} Doors</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-shield"></i> &nbsp;{{ $data->transmisson_car }} Manual</a>
-                                </li>
+                                <div class="x_car_detail_slider_bottom_cont float_left">
+                                    <div class="x_car_detail_slider_bottom_cont_left">
+                                        <h3>{{ $data->name_car }}</h3>
+                                        <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }}"></i>
+                                        <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }}"></i>
+                                        <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }}"></i>
+                                        <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }}"></i>
+                                        <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }}"></i>
+                                        <span>{{ App\Helpers\Format::countRiview($data->id) }}  Reviews / <span id="rev"></span></span>
+                                        {{-- <span>/ 3 Km</span> --}}
+                                    </div>
+                                    <div class="x_car_detail_slider_bottom_cont_right">
+                                        <h3>{{ App\Helpers\Format::rupiahFront($data->price_car) }}k</h3>
+                                        <p>
+                                            <span>from</span> <br />
+                                            / day
+                                        </p>
+                                    </div>
+                                    <div class="x_car_detail_slider_bottom_cont_center float_left">
+                                        <p>
+                                            Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, rem a quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Dssed odio sit amet nibh vulputate cursus a sit
+                                            amt mauris. Morbi accumsan ipsum velit.
+                                            <br />
+                                            <br />
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida n vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum tor. This is Photoshop's version of Lorem Ipsum.
+                                        </p>
+                                    </div>
+                                    <div class="x_car_offer_heading x_car_offer_heading_listing float_left x_car_offer_heading_inner_car_names x_car_offer_heading_inner_car_names2">
+                                        <ul class="">
+                                            <li>
+                                                <a href="#"><i class="fa fa-users"></i> &nbsp;{{ $data->seat_car }} Seats</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-clone"></i> &nbsp;{{ $data->door_car }} Doors</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-shield"></i> &nbsp;{{ $data->transmisson_car }} Manual</a>
+                                            </li>
 
-                                <li>
-                                    <a href="#"><i class="fa fa-briefcase"></i> &nbsp;{{ $data->bagage_car }}/ltr Bag Space</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-snowflake-o"></i>&nbsp;2 Air: Yes</a>
-                                </li>
-                                <li>
-                                    <div class="nice-select" tabindex="0">
-                                        <span class="current"><i class="fa fa-bars"></i> Others (2)</span>
-                                        <ul class="list">
-                                            <li class="dpopy_li">
-                                                <a href="#"><i class="fa fa-snowflake-o"></i> Air Conditioning</a>
+                                            <li>
+                                                <a href="#"><i class="fa fa-briefcase"></i> &nbsp;{{ $data->bagage_car }}/ltr Bag Space</a>
                                             </li>
-                                            <li class="dpopy_li">
-                                                <a href="#"><i class="fa fa-code-fork"></i> Transmission</a>
+                                            <li>
+                                                <a href="#"><i class="fa fa-snowflake-o"></i>&nbsp;2 Air: Yes</a>
                                             </li>
-                                            <li class="dpopy_li">
-                                                <a href="#"><i class="fa fa-user-circle-o"></i> Minimum age</a>
+                                            <li>
+                                                <div class="nice-select" tabindex="0">
+                                                    <span class="current"><i class="fa fa-bars"></i> Others (2)</span>
+                                                    <ul class="list">
+                                                        <li class="dpopy_li">
+                                                            <a href="#"><i class="fa fa-snowflake-o"></i> Air Conditioning</a>
+                                                        </li>
+                                                        <li class="dpopy_li">
+                                                            <a href="#"><i class="fa fa-code-fork"></i> Transmission</a>
+                                                        </li>
+                                                        <li class="dpopy_li">
+                                                            <a href="#"><i class="fa fa-user-circle-o"></i> Minimum age</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="x_avanticar_btn float_left">
-                            <ul>
-                                <li>
-                                    <a href="{{ url('car/'.Crypt::encrypt($data->id).'/rent') }}">Book Now <i class="fa fa-arrow-right"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12">
-                <div class="x_car_book_left_siderbar_wrapper float_left">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="x_slider_form_main_wrapper x_slider_form_main_wrapper_ccb float_left">
-                                <div class="x_slider_form_heading_wrapper x_slider_form_heading_wrapper_carbooking float_left">
-                                    <h3>Let’s find your perfect car</h3>
+                                    {{-- <div class="x_avanticar_btn float_left">
+                                        <ul>
+                                            <li>
+                                                <a href="{{ url('car/'.Crypt::encrypt($data->id).'/rent') }}">Book Now <i class="fa fa-arrow-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div> --}}
                                 </div>
-                                {{-- {{ dd($data) }} --}}
-                                <form action="{{ url("car/rent") }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="car_id" value="{{ Crypt::encrypt($data->id) }}">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-sec-header">
-                                                <h3>Pick-up Date</h3>
-                                                <input type="date" name="date_start" placeholder="Tue 16 Jan 2018" class="form-control" required/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="x_slider_select">
-                                                <select name="minutes_start" class="myselect" required>
-                                                    @for ($i = 1; $i <= 24; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                                <i class="fa fa-clock-o"></i>
-                                            </div>
-                                            <div class="x_slider_select x_slider_select2">
-                                                <select name="second_start" class="myselect" required>
-                                                    @for ($i = 1; $i <= 60; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-sec-header">
-                                                <h3>Drop-Off Date</h3>
-                                                <input type="date" name="date_end" placeholder="Tue 16 Jan 2018" class="form-control" required />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="x_slider_select">
-                                                <select name="minutes_end" class="myselect" required>
-                                                    @for ($i = 1; $i <= 24; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                                <i class="fa fa-clock-o"></i>
-                                            </div>
-                                            <div class="x_slider_select x_slider_select2">
-                                                <select name="second_end" class="myselect" required>
-                                                    @for ($i = 1; $i <= 60; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-12">
-                                            <div class="x_slider_checkbox float_left">
-                                                <input type="checkbox" id="c2" name="cb" />
-                                                <label for="c2">Driver age is between 30-65 &nbsp;<i class="fa fa-question-circle"></i> </label>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-12">
-                                            <div class="x_slider_checout_right x_slider_checout_right_carbooking">
-                                                <ul>
-                                                    <li>
-                                                        <button type="submit" class="btn btn-primary">Book Now</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
-                        {{-- {{ dd($data) }} --}}
-                    </div>
-                </div>
-            </div>
-                    
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="x_car_book_left_siderbar_wrapper float_left">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="x_slider_form_main_wrapper x_slider_form_main_wrapper_ccb float_left">
+                                            <div class="x_slider_form_heading_wrapper x_slider_form_heading_wrapper_carbooking float_left">
+                                                <h3>Let’s find your perfect car</h3>
+                                            </div>
+                                            {{-- {{ dd($data) }} --}}
+                                            <form action="{{ url("car/rent") }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="car_id" value="{{ Crypt::encrypt($data->id) }}">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-sec-header">
+                                                            <h3>Pick-up Date</h3>
+                                                            <input type="date" name="date_start" placeholder="Tue 16 Jan 2018" class="form-control" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="x_slider_select">
+                                                            <select name="minutes_start" class="myselect" required>
+                                                                @for ($i = 1; $i <= 24; $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                        <div class="x_slider_select x_slider_select2">
+                                                            <select name="second_start" class="myselect" required>
+                                                                @for ($i = 1; $i <= 60; $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-sec-header">
+                                                            <h3>Drop-Off Date</h3>
+                                                            <input type="date" name="date_end" placeholder="Tue 16 Jan 2018" class="form-control" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="x_slider_select">
+                                                            <select name="minutes_end" class="myselect" required>
+                                                                @for ($i = 1; $i <= 24; $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                        <div class="x_slider_select x_slider_select2">
+                                                            <select name="second_end" class="myselect" required>
+                                                                @for ($i = 1; $i <= 60; $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="col-md-12">
+                                                        <div class="x_slider_checkbox float_left">
+                                                            <input type="checkbox" id="c2" name="cb" />
+                                                            <label for="c2">Driver age is between 30-65 &nbsp;<i class="fa fa-question-circle"></i> </label>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="col-md-12">
+                                                        <div class="x_slider_checout_right x_slider_checout_right_carbooking">
+                                                            <ul>
+                                                                <li>
+                                                                    <button type="submit" class="btn btn-primary">Book Now</button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {{-- {{ dd($data) }} --}}
+                                </div>
+                            </div>
+                        </div>
+                                
                     <div class="col-md-12">
                         <div class="row">
+                            @foreach ($data->rating as $rating)
                             <div class="col-md-12">
                                 <div class="blog_single_comment_wrapper">
                                     <div class="blog_comment3_wrapper">
@@ -262,80 +263,24 @@
                                         </div>
                                         <div class="blog_comment1_cont">
                                             <h3>
-                                                Jhon Doe <i class="fa fa-circle"></i> <span>July 1, 2016</span> &nbsp;&nbsp;<i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
+                                                {{ $rating->user->name }} <i class="fa fa-circle"></i> <span>{{ \Carbon\Carbon::parse($rating->created_at)->format('M d Y') }}</span> &nbsp;&nbsp;
+                                                <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }} oo"></i>
+                                                <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }} oo"></i>
+                                                <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }} oo"></i>
+                                                <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }} oo"></i>
+                                                <i class="fa fa-star{{ (App\Helpers\Format::countRating($data->id) >= 1 ? '' : '-o') }} oo"></i>
                                             </h3>
-                                            <p>Integer porttitor fringilla vestibulum. Phasellus curs our tinnt nulla, ut mattis augue finibus ac. Vivamus elementum enim ac enim ultrices rhoncus.</p>
+                                            <p>{{ $rating->review }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="blog_single_comment_wrapper">
-                                    <div class="blog_comment3_wrapper">
-                                        <div class="blog_comment1_img">
-                                            <img src="{{ asset('') }}assets/images/comment_img4.jpg" alt="comment_img" class="img-responsive img-circle" />
-                                        </div>
-                                        <div class="blog_comment1_cont">
-                                            <h3>
-                                                Jhon Doe <i class="fa fa-circle"></i> <span>July 1, 2016 </span> &nbsp;&nbsp;<i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                            </h3>
-                                            <p>Integer porttitor fringilla vestibulum. Phasellus curs our tinnt nulla, ut mattis augue finibus ac. Vivamus elementum enim ac enim ultrices rhoncus.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="blog_single_comment_wrapper">
-                                    <div class="blog_comment3_wrapper">
-                                        <div class="blog_comment1_img">
-                                            <img src="{{ asset('') }}assets/images/comment_img2.jpg" alt="comment_img" class="img-responsive img-circle" />
-                                        </div>
-                                        <div class="blog_comment1_cont">
-                                            <h3>
-                                                Jhon Doe <i class="fa fa-circle"></i> <span>July 1, 2016 </span> &nbsp;&nbsp;<i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                            </h3>
-                                            <p>Integer porttitor fringilla vestibulum. Phasellus curs our tinnt nulla, ut mattis augue finibus ac. Vivamus elementum enim ac enim ultrices rhoncus.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="blog_single_comment_wrapper">
-                                    <div class="blog_comment3_wrapper">
-                                        <div class="blog_comment1_img">
-                                            <img src="{{ asset('') }}assets/images/comment_img1.jpg" alt="comment_img" class="img-responsive img-circle" />
-                                        </div>
-                                        <div class="blog_comment1_cont">
-                                            <h3>
-                                                Jhon Doe <i class="fa fa-circle"></i> <span>July 1, 2016 </span> &nbsp;&nbsp;<i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                                <i class="fa fa-star-o oo"></i>
-                                            </h3>
-                                            <p>Integer porttitor fringilla vestibulum. Phasellus curs our tinnt nulla, ut mattis augue finibus ac. Vivamus elementum enim ac enim ultrices rhoncus.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-            
-            {{-- {{ dd($data->user->detail->latitude) }} --}}
         </div>
     </div>
 </div>

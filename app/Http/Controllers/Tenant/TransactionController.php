@@ -3,13 +3,28 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Services\Tenant\TransactionsServices;
 use Illuminate\Http\Request;
+
 
 class TransactionController extends Controller
 {
+    protected $transactionService;
+
+    public function __construct(TransactionsServices $transactionService)
+    {
+        $this->transactionService = $transactionService;
+    }
     //
     public function index()
     {
-        return view('pages.tenant.transaction.index');
+
+        $response = $this->transactionService->getTransaction();
+
+        // dd($response);
+        return view('pages.tenant.transaction.index', [
+            'data' => $response->data,
+            'title' => 'Transaction'
+        ]);
     }
 }
