@@ -26,3 +26,7 @@ Route::get('district/{regncies_id}', [ApiController::class, 'district']);
 Route::get('village/{districts_id}', [ApiController::class, 'village']);
 
 Route::post('getDistance', [ApiController::class, 'getDistance']);
+
+Route::post('calculator', [ApiController::class, 'calculator']);
+
+Route::post('status-transaksi', [ApiController::class, 'statusTransaksi']);

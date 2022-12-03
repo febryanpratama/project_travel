@@ -62,4 +62,83 @@ class ApiService
         curl_close($ch);
         return $response;
     }
+
+    static function apiPayment($endpoint, $params = [])
+    {
+        $apiKey = env('PAYMENT_API_SANDBOX');
+
+        $baseUrl = env('URL_API_SANDBOX');
+
+        if ($params != null) {
+            $payload = $params;
+        } else {
+            $payload = [];
+        }
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => $baseUrl . $endpoint . http_build_query($payload),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ));
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        // echo empty($error) ? $response : $error;
+        if (empty($error)) {
+            return json_decode($response);
+        } else {
+            return $error;
+        }
+    }
+    static function transaction($endpoint, $params = [])
+    {
+        $apiKey = env('PAYMENT_API_SANDBOX');
+
+        $baseUrl = env('URL_API_SANDBOX');
+
+        if ($params != null) {
+            $payload = $params;
+        } else {
+            $payload = [];
+        }
+
+        // dd($baseUrl . $endpoint);
+        // dd($payload['params']);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => $baseUrl . $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => http_build_query($payload['params']),
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ));
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        // dd($response);
+        // echo empty($error) ? $response : $error;
+        if (empty($error)) {
+            return json_decode($response);
+        } else {
+            return $error;
+        }
+    }
 }

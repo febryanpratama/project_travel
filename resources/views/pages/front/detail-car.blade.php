@@ -44,25 +44,25 @@
                     <div class="x_icon_num x_icon_num2">
                         <p>2</p>
                     </div>
-                    <h5>Car</h5>
+                    <h5>Detail</h5>
                 </div>
                 <div class="x_title_num_main_box_wrapper x_title_num_main_box_wrapper3">
                     <div class="x_icon_num x_icon_num3">
                         <p>3</p>
                     </div>
-                    <h5>detail</h5>
+                    <h5>Cart</h5>
                 </div>
                 <div class="x_title_num_main_box_wrapper x_title_num_main_box_wrapper3">
                     <div class="x_icon_num x_icon_num3">
                         <p>4</p>
                     </div>
-                    <h5>checkout</h5>
+                    <h5>Checkout</h5>
                 </div>
                 <div class="x_title_num_main_box_wrapper x_title_num_main_box_wrapper3 x_title_num_main_box_wrapper_last">
                     <div class="x_icon_num x_icon_num3">
                         <p>5</p>
                     </div>
-                    <h5>done!</h5>
+                    <h5>Done!</h5>
                 </div>
             </div>
         </div>

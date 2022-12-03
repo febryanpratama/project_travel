@@ -22,7 +22,7 @@
                         @if (Auth::check())
                             @foreach (App\Helpers\Format::cart(Auth::user()->id) as $item => $key)
                             {{-- {{ dd($key) }} --}}
-                                <a href="{{ url('checkout') }}">
+                                <a href="{{ url('cart') }}">
                                     <div class="cc_cart_wrapper1">
                                         <div class="cc_cart_img_wrapper">
                                             <img src="{{ asset('assets') }}/images/cart_img.jpg" alt="cart_img" />

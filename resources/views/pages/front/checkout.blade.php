@@ -48,13 +48,13 @@
                <div class="x_icon_num">
                   <p>2</p>
                </div>
-               <h5>Car</h5>
+               <h5>Detail</h5>
             </div>
             <div class="x_title_num_main_box_wrapper">
                <div class="x_icon_num">
                   <p>3</p>
                </div>
-               <h5>detail</h5>
+               <h5>Cart</h5>
             </div>
             <div
                class="x_title_num_main_box_wrapper x_title_num_main_box_wrapper3"
@@ -81,392 +81,6 @@
 <div class="x_car_book_sider_main_Wrapper float_left">
    <div class="container">
       <div class="row">
-         
-         <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="x_carbooking_right_section_wrapper float_left">
-                       <div class="row">
-                          <div class="col-md-12">
-                             <div class="x_car_checkout_right_main_box_wrapper float_left">
-                                <div class="car-filter order-billing margin-top-0">
-                                   <div class="heading-block text-left margin-bottom-0">
-                                      <h4>Detail Orders</h4>
-                                   </div>
-                                   <hr />
-                                   <table class="table table-striped">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Image</th>
-                                                <th>Name Car</th>
-                                                <th>Days</th>
-                                                <th>Price /Day</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-center">
-                                            @if (Auth::check())
-                                                @foreach (App\Helpers\Format::cart(Auth::user()->id) as $item => $key)
-                                                    <tr>
-                                                        <td>{{ $item+1 }}</td>
-                                                        <td>
-                                                            <img src="{{ asset('images/cars/'.App\Helpers\Format::photo($key->car_id)) }}" width="50" height="40" style="border-radius: 5px" alt="">
-                                                        </td>
-                                                        <td>{{ $key->car->name_car }}</td>
-                                                        <td>{{ App\Helpers\Format::days($key->start_date, $key->end_date) }} days</td>
-                                                        <td>{{ number_format($key->car->price_car,0) }}</td>
-                                                        <td>{{ number_format(($key->car->price_car*App\Helpers\Format::days($key->start_date, $key->end_date)),0) }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                   </table>
-                                   {{-- <form class="billing-form">
-                                      <ul class="list-unstyled row">
-                                         <li class="col-md-6">
-                                            <label
-                                               >First Name *
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Last Name *
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Driver's Lisence ID
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Company
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label>Country</label>
-                                            <select class="myselect">
-                                               <option>Select</option>
-                                               <option>Afghanistan</option>
-                                               <option>Albania</option>
-                                               <option>Algeria</option>
-                                               <option>Andorra</option>
-                                               <option>Angola</option>
-                                            </select>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label>City/town</label>
-                                            <select class="myselect">
-                                               <option>Select</option>
-                                               <option>Afghanistan</option>
-                                               <option>Albania</option>
-                                               <option>Algeria</option>
-                                               <option>Andorra</option>
-                                               <option>Angola</option>
-                                            </select>
-                                         </li>
-                                         <li class="col-md-12">
-                                            <label
-                                               >Street Address
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Phone
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Email Address *
-                                            <input
-                                               type="email"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-12">
-                                            <label>Additional information</label>
-                                            <textarea
-                                               placeholder="Notes about your order, e.g. special notes for car."
-                                               class="form-control"
-                                               ></textarea>
-                                         </li>
-                                      </ul>
-                                      <hr />
-                                      <div class="payme-opton">
-                                         <div class="heading-block text-left margin-bottom-30">
-                                            <h4>Payment</h4>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="poa"
-                                               value="option1"
-                                               checked=""
-                                               />
-                                            <label for="poa">Payment on Arrival</label>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="paypal"
-                                               value="option1"
-                                               />
-                                            <label for="paypal">Paypal</label>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="stripe"
-                                               value="option1"
-                                               />
-                                            <label for="stripe">Stripe</label>
-                                         </div>
-                                      </div>
-                                      <hr />
-                                      <div
-                                         class="checkbox car_checkout_chekbox car_checkout_chekbox1"
-                                         >
-                                         <input type="checkbox" id="c2" name="cb" />
-                                         <label for="c2">Create an Account?</label>
-                                      </div>
-                                      <div class="checkbox car_checkout_chekbox">
-                                         <input type="checkbox" id="c3" name="cb" />
-                                         <label for="c3"
-                                            >I have Read and Accept Terms & Conditions *</label
-                                            >
-                                      </div>
-                                   </form> --}}
-                                </div>
-                             </div>
-                          </div>
-                       </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="x_carbooking_right_section_wrapper float_left">
-                       <div class="row">
-                          <div class="col-md-12">
-                             <div class="x_car_checkout_right_main_box_wrapper float_left">
-                                <div class="car-filter order-billing margin-top-0">
-                                   <div class="heading-block text-left margin-bottom-0">
-                                      <h4>Billing Details</h4>
-                                      <div class="pull-right checkout_login_btn">
-                                         <ul>
-                                            <li>
-                                               <a href="#"
-                                                  >Login <i class="fa fa-arrow-right"></i
-                                                  ></a>
-                                            </li>
-                                         </ul>
-                                         <p class="retrn">Returning customer?</p>
-                                      </div>
-                                   </div>
-                                   <hr />
-                                   <form class="billing-form">
-                                      <ul class="list-unstyled row">
-                                         <li class="col-md-6">
-                                            <label
-                                               >First Name *
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Last Name *
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Driver's Lisence ID
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Company
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label>Country</label>
-                                            <select class="myselect">
-                                               <option>Select</option>
-                                               <option>Afghanistan</option>
-                                               <option>Albania</option>
-                                               <option>Algeria</option>
-                                               <option>Andorra</option>
-                                               <option>Angola</option>
-                                            </select>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label>City/town</label>
-                                            <select class="myselect">
-                                               <option>Select</option>
-                                               <option>Afghanistan</option>
-                                               <option>Albania</option>
-                                               <option>Algeria</option>
-                                               <option>Andorra</option>
-                                               <option>Angola</option>
-                                            </select>
-                                         </li>
-                                         <li class="col-md-12">
-                                            <label
-                                               >Street Address
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Phone
-                                            <input
-                                               type="text"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-6">
-                                            <label
-                                               >Email Address *
-                                            <input
-                                               type="email"
-                                               placeholder=""
-                                               class="form-control"
-                                               />
-                                            </label>
-                                         </li>
-                                         <li class="col-md-12">
-                                            <label>Additional information</label>
-                                            <textarea
-                                               placeholder="Notes about your order, e.g. special notes for car."
-                                               class="form-control"
-                                               ></textarea>
-                                         </li>
-                                      </ul>
-                                      <hr />
-                                      <div class="payme-opton">
-                                         <div class="heading-block text-left margin-bottom-30">
-                                            <h4>Payment</h4>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="poa"
-                                               value="option1"
-                                               checked=""
-                                               />
-                                            <label for="poa">Payment on Arrival</label>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="paypal"
-                                               value="option1"
-                                               />
-                                            <label for="paypal">Paypal</label>
-                                         </div>
-                                         <div class="radio">
-                                            <input
-                                               type="radio"
-                                               name="ratio"
-                                               id="stripe"
-                                               value="option1"
-                                               />
-                                            <label for="stripe">Stripe</label>
-                                         </div>
-                                      </div>
-                                      <hr />
-                                      <div
-                                         class="checkbox car_checkout_chekbox car_checkout_chekbox1"
-                                         >
-                                         <input type="checkbox" id="c2" name="cb" />
-                                         <label for="c2">Create an Account?</label>
-                                      </div>
-                                      <div class="checkbox car_checkout_chekbox">
-                                         <input type="checkbox" id="c3" name="cb" />
-                                         <label for="c3"
-                                            >I have Read and Accept Terms & Conditions *</label
-                                            >
-                                      </div>
-                                   </form>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-md-12">
-                             <div class="contect_btn contect_btn_contact">
-                                <ul>
-                                   <li>
-                                      <a href="#"
-                                         >Place an Order <i class="fa fa-arrow-right"></i
-                                         ></a>
-                                   </li>
-                                </ul>
-                             </div>
-                          </div>
-                       </div>
-                    </div>
-                </div>
-            </div>
-         </div>
          <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="x_car_book_left_siderbar_wrapper float_left">
                <div class="row">
@@ -474,35 +88,33 @@
                      <!-- Filter Results -->
                      <div class="car-filter accordion x_inner_car_acc_accor">
                         <h3>Order Details</h3>
-                        <hr />
+                        <hr>
                         <!-- Resources -->
                         <div class="x_car_access_filer_top_img">
-                           <img src="images/c2.png" alt="car_img" />
-                           <h3>Dakota gtx</h3>
-                           <p>$69 (1 day)</p>
+                           <img src="{{ asset('images/cars/'.$data->car->photo[0]->photo_path) }}" alt="car_img" class="img-fluid">
+                           <h3>{{ $data->car->name_car }}</h3>
+                           <p>{{ App\Helpers\Format::rupiahFront($data->car->price_car) }}k (1 day)</p>
                         </div>
-                        <hr />
+                        <hr>
                         <!-- Company -->
                         <!-- Attributes -->
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding"
-                           >
+                        <div class="panel panel-default x_car_inner_acc_acordion_padding">
                            <div class="collapse show">
                               <div class="panel-body">
                                  <div class="x_car_acc_filter_date">
                                     <table class="table">
                                        <thead>
-                                          <tr>
+                                          <tr class="text-center">
                                              <th scope="col">QTY</th>
                                              <th scope="col">Rate</th>
                                              <th scope="col">Subtotal</th>
                                           </tr>
                                        </thead>
                                        <tbody>
-                                          <tr>
-                                             <td>1 Day</td>
-                                             <td>$69</td>
-                                             <td>$69</td>
+                                          <tr class="text-center">
+                                             <td>{{ App\Helpers\Format::days($data->start_date, $data->end_date) }} Day</td>
+                                             <td>{{ App\Helpers\Format::rupiahFront($data->car->price_car) }}k</td>
+                                             <td>{{ App\Helpers\Format::rupiahFront($data->car->price_car)*App\Helpers\Format::days($data->start_date, $data->end_date) }}k</td>
                                           </tr>
                                        </tbody>
                                     </table>
@@ -510,50 +122,44 @@
                               </div>
                            </div>
                         </div>
-                        <hr />
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last"
-                           >
+                        <hr>
+                        <div class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last">
                            <div class="panel-heading car_checkout_caret">
                               <h5 class="panel-title">
-                                 <a href="#"> Pick-up Date & place</a>
+                                 <a href="#"> Pick-up Date &amp; place</a>
                               </h5>
                            </div>
                            <div class="collapse show">
                               <div class="panel-body">
                                  <div class="x_car_acc_filter_date">
                                     <ul>
-                                       <li>Tue 16 Jan 2018 @ 10:00</li>
-                                       <li>Barcelona, Airport</li>
+                                       <li>{{ Carbon\Carbon::parse($data->start_date)->format('d M Y') }} @ {{ Carbon\Carbon::parse($data->start_date)->format('H:i') }}</li>
+                                       <li>Place </li>
                                     </ul>
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <hr />
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last"
-                           >
+                        <hr>
+                        <div class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last">
                            <div class="panel-heading car_checkout_caret">
                               <h5 class="panel-title">
-                                 <a href="#"> Drop-Off Date & place</a>
+                                 <a href="#"> Drop-Off Date &amp; place</a>
                               </h5>
                            </div>
                            <div class="collapse show">
                               <div class="panel-body">
                                  <div class="x_car_acc_filter_date">
                                     <ul>
-                                       <li>Tue 17 Jan 2018 @ 10:00</li>
-                                       <li>Barcelona, Airport</li>
+                                       <li>{{ Carbon\Carbon::parse($data->end_date)->format('d M Y') }} @ {{ Carbon\Carbon::parse($data->end_date)->format('H:i') }}</li>
+                                       <li>Place </li>
                                     </ul>
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <hr />
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last"
-                           >
+                        <hr>
+                        {{-- <div class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last">
                            <div class="panel-heading car_checkout_caret">
                               <h5 class="panel-title">
                                  <a href="#"> Accessories</a>
@@ -570,13 +176,11 @@
                               </div>
                            </div>
                         </div>
-                        <hr />
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last"
-                           >
+                        <hr>
+                        <div class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last">
                            <div class="panel-heading car_checkout_caret">
                               <h5 class="panel-title">
-                                 <a href="#"> Taxes & Fees</a>
+                                 <a href="#"> Taxes &amp; Fees</a>
                               </h5>
                            </div>
                            <div class="collapse show">
@@ -589,24 +193,124 @@
                               </div>
                            </div>
                         </div>
-                        <hr />
-                        <div
-                           class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last"
-                           >
+                        <hr>
+                        <div class="panel panel-default x_car_inner_acc_acordion_padding x_car_inner_acc_acordion_padding_last">
                            <div class="collapse show">
                               <div class="panel-body">
                                  <div class="x_car_acc_filter_date">
-                                    <input type="text" placeholder="Coupon Code" />
+                                    <input type="text" placeholder="Coupon Code">
                                     <button type="submit">
                                     <i class="fa fa-arrow-right"></i>
                                     </button>
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> --}}
                         <div class="x_car_acc_filter_bottom_total">
                            <ul>
-                              <li>total <span>$287</span></li>
+                              <li>Name <span id="name"> </span></li>
+                           </ul>
+                           <ul class="mt-2">
+                              <li>total <span id="total"> Rp. {{ number_format($data->car->price_car*App\Helpers\Format::days($data->start_date, $data->end_date),'0') }}</span></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12">
+            <div class="x_carbooking_right_section_wrapper float_left">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="x_car_checkout_right_main_box_wrapper float_left">
+                        <div class="car-filter order-billing margin-top-0">
+                           <div class="heading-block text-left margin-bottom-0">
+                              <h4>Spesification Details</h4>
+                              {{-- <div class="pull-right checkout_login_btn">
+                                 <ul>
+                                    <li>
+                                       <a href="#">Login <i class="fa fa-arrow-right"></i></a>
+                                    </li>
+                                 </ul>
+                                 <p class="retrn">Returning customer?</p>
+                              </div> --}}
+                           </div>
+                           <hr>
+                           <form class="billing-form" id="myForm" method="POST" action="{{ url('checkout') }}">
+                              @csrf
+                              <input type="hidden" name="cart_id" value="{{ $data->id }}">
+                              <input type="hidden" name="total_price" value="" id="total_price">
+                              <input type="hidden" name="fee" value="" id="fee">
+                              <ul class="list-unstyled row">
+                                 <li class="col-md-6">
+                                    <label>Category Car *
+                                    <input type="text" placeholder="" value="{{ $data->car->categories->category_name }}" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>Brand Car *
+                                    <input type="text" placeholder="" value="{{ $data->car->brand_car }}" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>License Plate *
+                                    <input type="text" placeholder="" value="{{ $data->car->license_plate }}" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>Year Car *
+                                    <input type="text" placeholder="" value="{{ $data->car->year_car }}" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>Seat Car *
+                                    <input type="text" placeholder="" value="{{ $data->car->seat_car }} Seat" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>Door Car *
+                                    <input type="text" placeholder="" value="{{ $data->car->door_car }} Door" readonly class="form-control">
+                                    </label>
+                                 </li>
+                                 <li class="col-md-6">
+                                    <label>Baggage Car *
+                                    <input type="text" placeholder=""  value="{{ $data->car->bagage_car }} ltr" readonly class="form-control">
+                                    </label>
+                                 </li>
+                              </ul>
+                              <hr>
+                              <div class="payme-opton">
+                                 <div class="heading-block text-left margin-bottom-30">
+                                    <h4>Payment</h4>
+                                 </div>
+                                 <div class="radio">
+                                    <input type="radio" name="channel_pembayaran" class="check" id="cod" value="COD" checked="">
+                                    <label for="cod">Payment on Arrival</label>
+                                 </div>
+                                 @foreach ($channel as $item)
+                                    <div class="radio">
+                                       <input type="radio" name="channel_pembayaran" class="check" id="{{ $item->code }}" value="{{ $item->code }}">
+                                       <label for="{{ $item->code }}">{{ $item->name }}</label>
+                                    </div>
+                                 @endforeach
+                              </div>
+                              <hr>
+                              <div class="checkbox car_checkout_chekbox">
+                                 <input type="checkbox" id="c3" name="cb">
+                                 <label for="c3">I have Read and Accept Terms &amp; Conditions *</label>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="contect_btn contect_btn_contact">
+                        <div class="col-md-12 mt-1">
+                           <ul>
+                              <li>
+                                 <button type="submit" form="myForm" class="btn btn-primary">Place An Order <i class="fa fa-arrow-right"></i></button>
+                              </li>
                            </ul>
                         </div>
                      </div>
@@ -618,4 +322,49 @@
    </div>
 </div>
 <!-- x car book sidebar section Wrapper End -->
+@endsection
+
+@section('script')
+    <script>
+      $('.check').on('change', function(){
+         if($(this).is(':checked')){
+            let code = $(this).val();
+            let total = {{ $data->car->price_car*App\Helpers\Format::days($data->start_date, $data->end_date) }}
+
+            $.ajax({
+               url: "{{ url('api/calculator') }}",
+               type: "POST",
+               data: {
+                  "_token": "{{ csrf_token() }}",
+                  "code": code,
+                  "amount": total
+               },
+               success: function(response){
+
+                  // Response
+                  if(code != 'COD'){
+                     if(response.status == true){
+                        let totalamount = (total + response.data[0].fee.flat)
+                        let format = (totalamount).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 })
+                        $('#name').html(response.data[0].code);
+                        $('#total').html(format);
+                        $('#total_price').val(totalamount);
+                        $('#code').val(response.data[0].code);
+                        $('#fee').val(response.data[0].fee.flat);
+                     }else{
+                        alert("Error Calculator")
+                     }
+                  }else{
+                     let format = (total).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 })
+                     $('#name').html('COD');
+                     $('#total').html(format);
+                     $('#code').val('COD');
+                     $('#total_price').val(total);
+                  }
+
+               }
+            })
+         }
+      })
+    </script>
 @endsection

@@ -33,8 +33,18 @@ Route::group([
     // Route::get('/car/{id}/rent', 'rentCar');
     Route::post('/car/rent', 'storeRentCar');
 
+    // Cart
+
+    Route::get('/cart', 'cart')->middleware('auth');
     // Checkout
-    Route::get('/checkout', 'checkout');
+    Route::get('/checkout/{cart_id}', 'checkout')->middleware('auth');
+    Route::post('/checkout', 'storeCheckout')->middleware('auth');
+
+    Route::get('/success-checkout', 'successCheckout')->middleware('auth');
+
+    // Redirect Tripay
+
+    Route::get('redirect', 'getRedirect');
 
     // Daftar
     Route::get('/signup', 'signup');

@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Helpers\Format;
 use App\Models\Car;
 use App\Models\Cart;
 use App\Models\DetailUsers;
+use App\Models\Rental;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Services\ApiService;
 use Illuminate\Support\Facades\Auth;
@@ -209,5 +212,178 @@ class FrontService
                 ]
             ];
         }
+    }
+
+    public function cart()
+    {
+        $data = Cart::with('car', 'car.user', 'car.photo', 'car.categories', 'car.user.detail')->where('borrower_id', Auth::user()->id)->where('status', 'Unpaid')->get();
+
+        // dd($data);
+
+        return (object)[
+            'status' => true,
+            'message' => 'Your request has beenp processed successfully',
+            'data' => $data
+        ];
+    }
+
+    public function getChannel($cart_id)
+    {
+        // hit payment api
+        $api = $this->api->apiPayment('merchant/payment-channel/', []);
+
+        // Get Data Cart id
+        $data = Cart::with('car', 'car.user', 'car.photo', 'car.categories', 'car.user.detail')->where('id', decrypt($cart_id))->first();
+
+        // dd($data);
+
+        // dd($api->data);
+        return [
+            'status' => true,
+            'message' => 'Your request has been processed successfully',
+            'data' => [
+                'cart_id' => $cart_id,
+                'payment_channel' => $api->data,
+                'cart' => $data
+            ]
+        ];
+    }
+    public function requestPayment($data)
+    {
+        // dd($data);
+        $validator = Validator::make($data, [
+            'cart_id' => 'required|exists:carts,id',
+            'total_price' => 'required',
+            'fee' => 'required',
+            'channel_pembayaran' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+                'data' => null
+            ];
+        }
+        DB::beginTransaction();
+
+        try {
+            $kd_transaction = 'TRX-' . date('Ymd') . '-' . substr(strtotime(date('Y-m-d H:i:s')), 6, 10);
+
+            $privateKey   = env('PRIVAT_KEY_SANDBOX');
+            $merchantCode = 'T8584';
+            $merchantRef  = $kd_transaction;
+            $amount       = $data['total_price'] - $data['fee'];
+
+            $signature = hash_hmac('sha256', $merchantCode . $merchantRef . $amount, $privateKey);
+
+            $cart = Cart::with('car', 'borrower', 'borrower.detail')->where('id', $data['cart_id'])->first();
+
+            // dd($cart);
+
+            $payload = [
+                'method' => $data['channel_pembayaran'],
+                'merchant_ref' => $kd_transaction,
+                'amount' => $data['total_price'] - $data['fee'],
+                'customer_name' => $cart->borrower->detail->firstname,
+                'customer_email' => $cart->borrower->email,
+                'customer_phone' => $cart->borrower->detail->phone_number_1,
+                'order_items' => [
+                    [
+                        'sku' => 'SID-' . $cart->car->id,
+                        'name' => $cart->car->name_car,
+                        'price' => $cart->car->price_car,
+                        'quantity' => Format::days($cart->start_date, $cart->end_date),
+                    ]
+                ],
+                'return_url'   => 'https://travel.febryancaesarpratama.com/redirect',
+                'expired_time' => (time() + (24 * 60 * 60)), // 24 jam
+                'signature'    => $signature
+            ];
+
+            $api = $this->api->transaction('transaction/create', ['params' => $payload]);
+
+            if ($api->success) {
+                $transaction = Transaction::create([
+                    'user_id' => $cart->borrower_id,
+                    'car_id' => $cart->car_id,
+                    'reference' => $api->data->reference,
+                    'merchant_ref' => $api->data->merchant_ref,
+                    'payment_method' => $api->data->payment_method,
+                    'payment_name' => $api->data->payment_name,
+                    'customer_name' => $api->data->customer_name,
+                    'customer_email' => $api->data->customer_email,
+                    'customer_phone' => $api->data->customer_phone,
+                    'callback_url' => $api->data->callback_url,
+                    'return_url' => $api->data->return_url,
+                    'fee_merchant' => $api->data->fee_merchant,
+                    'fee_customer' => $api->data->fee_customer,
+                    'total_fee' => $api->data->total_fee,
+                    'amount_received' => $api->data->amount_received,
+                    'pay_code' => $api->data->pay_code,
+                    'pay_url' => $api->data->pay_url,
+                    'checkout_url' => $api->data->checkout_url,
+                    'status' => $api->data->status,
+                    'expired_time' => $api->data->expired_time,
+                ]);
+
+                // dd($transaction);
+
+                Cart::where('id', $cart->id)->update([
+                    'status' => 'Paid'
+                ]);
+
+                Rental::create([
+                    'transaction_id' => $transaction->id,
+                    'car_id' => $cart->car_id,
+                    'borrower_id' => $cart->borrower_id,
+                    'rental_status' => 'On Take'
+                ]);
+
+                DB::commit();
+
+                return [
+                    'status' => true,
+                    'message' => 'Your request has been processed successfully',
+                    'data' => [
+                        'cart_id' => $cart->id,
+                        'transaction' => $transaction
+                    ]
+                ];
+            } else {
+                // 
+
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
+    }
+
+
+    public function responsePayment($data)
+    {
+        // dd($data);
+        $validator = Validator::make($data, [
+            'tripay_reference' => 'required|exists:transactions,reference',
+            'tripay_merchant_ref' => 'required|exists:transactions,merchant_ref',
+            'tripay_status' => 'required|in:UNPAID,PAID,REFUND,EXPIRED,FAILED',
+            'tripay_signature' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        }
+        # code...
+
+        Transaction::where('reference', $data['tripay_reference'])->where('merchant_ref', $data['tripay_merchant_ref'])->update([
+            'status' => $data['tripay_status']
+        ]);
+
+        return [
+            'status' => true,
+            'message' => 'Your request has been processed successfully',
+            'data' => null
+        ];
     }
 }
