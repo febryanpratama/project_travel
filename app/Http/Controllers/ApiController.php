@@ -13,7 +13,7 @@ class ApiController extends Controller
 {
     //
     protected $apiMaps = 'AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM';
-    protected $privateKey = env('PRIVAT_KEY_SANDBOX ');
+
 
     // public function __construct($apiMaps)
     // {
@@ -21,6 +21,7 @@ class ApiController extends Controller
     // }
 
     protected $apiService;
+    protected $privateKey = '1kR8l-lToOh-d0t0b-tcTdn-Wg5wG';
 
     public function __construct(ApiService $apiService)
     {
