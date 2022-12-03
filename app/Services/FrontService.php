@@ -372,6 +372,7 @@ class FrontService
         ]);
 
         if ($validator->fails()) {
+            dd($validator->errors()->first());
             abort(404);
         }
         # code...
