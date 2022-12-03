@@ -131,16 +131,16 @@ class FrontController extends Controller
         // dd($request->ip());
         $ip = $request->ip();
         // $response = $this->frontService->responsePayment($request->all());
+        $response = $this->frontService->responsePayment($request->all());
 
-        if ($ip == '95.111.200.230' || $ip == '127.0.0.1') {
-            # code...
-            $response = $this->frontService->responsePayment($request->all());
+        return redirecT('/success-checkout');
+        // if ($ip == '95.111.200.230' || $ip == '127.0.0.1') {
+        //     # code...
 
-            // return response()->json($response);
-            return redirecT('/success-checkout');
-        }
+        //     // return response()->json($response);
+        // }
 
-        abort(404);
+        // abort(404);
     }
 
     public function successCheckout()
