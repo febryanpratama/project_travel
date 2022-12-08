@@ -20,6 +20,17 @@ class RentalService
         ];
     }
 
+    public function getDetailRental($rental_id)
+    {
+        $data = Rental::with('transaction', 'transaction.cart', 'car', 'borrower', 'borrower.detail')->whereRelation('transaction', 'user_id', Auth::user()->id)->where('id', $rental_id)->first();
+
+        return (object)[
+            'status' => true,
+            'message' => 'Success Get Rental',
+            'data' => $data
+        ];
+    }
+
     public function addRating($data)
     {
         // dd($data);

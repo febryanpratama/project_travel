@@ -33,6 +33,7 @@
                             <td>{{ \Carbon\Carbon::parse($item->transaction->cart->end_date)->format('d M Y') }}</td>
                             <td>{{ $item->rental_status }}</td>
                             <td class="d-flex justify-content-center">
+                                <a href="{{ url('tenant/rental/take-car/'.encrypt($item->id)) }}" class="btn btn-sm btn-info">Detail</a>
                                 @switch($item->rental_status)
                                     @case('On Take')
                                         <a href="{{ url('tenant/rental/take-car/'.encrypt($item->id)) }}" class="btn btn-sm btn-info">{{ $item->rental_status }}</a>

@@ -30,7 +30,12 @@ class RentalController extends Controller
 
     public function detail($id)
     {
-        return view('pages.tenant.rental.detail');
+        $response = $this->rentalService->getDetailRental($id);
+
+        // dd($response->data);
+        return view('pages.tenant.rental.detail', [
+            'data' => $response->data,
+        ]);
     }
 
 
