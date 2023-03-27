@@ -20,6 +20,7 @@
         <!--favicon-->
         <link rel="shortcut icon" type="image/png" href="{{ asset('assets') }}/images/fevicon.png" />
 
+        {{-- <link rel="stylesheet" href="https://twitter.github.io/typeahead.js/css/main.css"> --}}
         <!-- Required Core Stylesheet -->
         {{--
         <link
@@ -44,6 +45,66 @@
         --}} {{--
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
         --}}
+
+        <style>
+            .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-hint {
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999;
+}
+
+.tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+    width: 100%;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.tt-dropdown-menu  { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+    width: 100%;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    width: 100%;
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+        </style>
         <style>
             .text-center {
                 text-align: center;
@@ -198,6 +259,13 @@
         <script src="{{ asset('assets') }}/js/xpedia_II.js"></script>
 
         <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.0/typeahead.min.js"></script>
+        {{-- <script src="{{ asset('') }}typeahead/typeahead.js"></script> --}}
+        {{-- <script src="https://cdn.jsdelivr.net/npm/jquery-typeahead@2.11.1/dist/jquery.typeahead.min.js"></script> --}}
+
         @include('layouts._partials.nav-script') 
         @yield('script')
 

@@ -207,19 +207,32 @@
                 </label>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary d-grid w-100">
+            <button type="submit" class="btn btn-outline-info d-grid w-100">
               Sign in
             </button>
           </form>
 
           <p class="text-center">
             <span>New on our platform?</span>
-            <a href="auth-register-cover.html">
+            {{-- <a href="auth-register-cover.html"> --}}
               <span>Create an account</span>
-            </a>
+            {{-- </a> --}}
           </p>
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6 text-center">
+              <a href="{{ url('signup') }}">
+                <span>Buat Akun Personal</span>
+              </a>
+            </div>
+            <div class="col-md-6 text-center">
+              {{-- x --}}
+              <a href="{{ url('signup/company') }}">
+                <span>Buat Akun Perusahaan</span>
+              </a>
+            </div>
+          </div>
 
-          <div class="divider my-4">
+          {{-- <div class="divider my-4">
             <div class="divider-text">or</div>
           </div>
 
@@ -235,7 +248,7 @@
             <a href="javascript:;" class="btn btn-icon btn-label-twitter">
               <i class="tf-icons bx bxl-twitter"></i>
             </a>
-          </div>
+          </div> --}}
         </div>
       </div>
       <!-- /Login -->

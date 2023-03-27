@@ -79,7 +79,7 @@ class FrontService
                 'password' => Hash::make($data['password']),
             ]);
 
-            $user->assignRole('Tenant');
+            $user->assignRole('User');
 
             if ($data['photo_user']) {
                 # code...
@@ -386,5 +386,134 @@ class FrontService
             'message' => 'Your request has been processed successfully',
             'data' => $data['tripay_merchant_ref']
         ];
+    }
+
+    static function storeSignupCompany($data)
+    {
+        // dd($data);
+        $validator = Validator::make($data, [
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|same:repassword',
+            'identity_number' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+            'villages' => 'required',
+            'address' => 'required',
+            'phone_number_1' => 'required',
+            'photo_user' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            // dd("ok");
+            dd($validator->errors()->first());
+            return [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+                'data' => null
+            ];
+        }
+
+        if ($validator->fails()) {
+            return [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+                'data' => null
+            ];
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            $user->assignRole('Tenant');
+
+            if ($data['photo_user']) {
+                # code...
+                $imageName = time() . '.' . $data['photo_user']->extension();
+                $data['photo_user']->move(public_path('images/user'), $imageName);
+            }
+
+
+            DetailUsers::create([
+                'user_id' => $user->id,
+                'firstname' => $data['name'],
+                'lastname' => null,
+                'identity_number' => $data['identity_number'],
+                'state' => $data['state'],
+                'city' => $data['city'],
+                'district' => $data['district'],
+                'villages' => $data['villages'],
+                'address' => $data['address'],
+                'phone_number_1' => $data['phone_number_1'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'path_user' => $imageName,
+            ]);
+
+            DB::commit();
+
+            // dd("ok");
+            return [
+                'status' => true,
+                'message' => 'Your request has been processed successfully',
+                'data' => null
+            ];
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            // dd($th->getMessage() . "ok");
+            DB::rollback();
+            return [
+                'status' => false,
+                'message' => $th->getMessage(),
+                'data' => null
+            ];
+        }
+    }
+
+    static function getCar($data)
+    {
+        // dd($data['latitude']);
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
+        $radius = 10;
+        // $data = DetailUsers::where('latitude', 'like', '%' . '-6.3126432' . '%')->where('longitude', 'like', '%' . '106.8990464' . '%')->get();
+
+        $data = DetailUsers::with('user', 'user.car')->selectRaw("id,user_id,firstname, lastname, latitude, longitude,
+                         ( 10000 * acos( cos( radians(?) ) *
+                           cos( radians( latitude ) )
+                           * cos( radians( longitude ) - radians(?)
+                           ) + sin( radians(?) ) *
+                           sin( radians( latitude ) ) )
+                         ) AS distance", [$latitude, $longitude, $latitude])
+            ->having("distance", "<", $radius)
+            ->limit(20)
+            ->get();
+
+        // dd($data);
+
+        if ($data->isNotEmpty()) {
+            return [
+                'status' => true,
+                'message' => 'Your request has been processed successfully',
+                'data' => $data
+            ];
+        }
+
+        return [
+            'status' => false,
+            'message' => 'Your request has been processed successfully',
+            'data' => null
+        ];
+        // dd($data);
     }
 }

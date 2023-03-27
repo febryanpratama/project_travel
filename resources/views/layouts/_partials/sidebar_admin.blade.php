@@ -75,13 +75,13 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+                <div data-i18n="Master Data">Master Data</div>
             </a>
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="layouts-collapsed-menu.html" class="menu-link">
-                        <div data-i18n="Collapsed menu">Collapsed menu</div>
+                    <a href="{{ url('admin/members') }}" class="menu-link">
+                        <div data-i18n="Collapsed menu">Members</div>
                     </a>
                 </li>
                 <li class="menu-item">

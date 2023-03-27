@@ -288,7 +288,7 @@
 {{-- {{ dd($data->user) }} --}}
 @endsection 
 @section('script')
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyALEY9XSRU4ipaCR1u6iSXdOYmEMU75t8c"></script>
 <script>
     $(".owl-carousel").owlCarousel({
         items: 1,

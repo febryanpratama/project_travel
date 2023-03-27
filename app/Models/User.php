@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(DetailUsers::class, 'id', 'user_id');
     }
+
+    public function car()
+    {
+        return $this->hasMany(Car::class, 'user_id', 'id');
+    }
 }

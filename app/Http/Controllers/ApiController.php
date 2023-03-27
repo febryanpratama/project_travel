@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Response;
 class ApiController extends Controller
 {
     //
-    protected $apiMaps = 'AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM';
+    protected $apiMaps = 'AIzaSyALEY9XSRU4ipaCR1u6iSXdOYmEMU75t8c';
+
 
 
     // public function __construct($apiMaps)
@@ -61,7 +62,7 @@ class ApiController extends Controller
     public function getDistance(Request $request)
     {
         $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=' . $request->lator . ',' . $request->longor . '&destinations=' . $request->latde . ',' . $request->longde . '&key=' . $this->apiMaps;
-        // dd($url);
+        dd($url);
         $response = Http::get($url);
         $response = json_decode($response, true);
         // dd($response);

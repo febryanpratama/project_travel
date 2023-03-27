@@ -1,5 +1,8 @@
 @extends('layouts.base')
-
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/css/autocomplete.min.css"
+/>
 @section('content')
     <!-- hs Slider Start -->
     <div class="slider-area float_left">
@@ -107,103 +110,66 @@
     
     <div class="x_responsive_form_wrapper float_left">
         <div class="container">
-            <div class="x_slider_form_main_wrapper float_left">
-                <div class="x_slider_form_heading_wrapper float_left">
-                <h3>Let’s find your perfect car</h3>
-                </div>
-                <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="x_slider_form_input_wrapper float_left">
-                        <h3>Pick-up Location</h3>
-                        <input type="text" placeholder="City, Airport, Station, etc.">
+            <form action="{{ url('get-car') }}" method="POST">
+                @csrf
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
+
+                <div class="x_slider_form_main_wrapper float_left">
+                    <div class="x_slider_form_heading_wrapper float_left">
+                        <h3>Let’s find your perfect car</h3>
                     </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="x_slider_form_input_wrapper float_left">
-                        <h3>Drop-off Location</h3>
-                        <input type="text" placeholder="City, Airport, Station, etc.">
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                    <div class="x_slider_checkbox float_left">
-                        <input type="checkbox" id="c5" name="cb">
-                        <label for="c5">Driver age is between 30-65 &nbsp;<i class="fa fa-question-circle"></i>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-sec-header">
-                        <h3>Pick-up Date</h3>
-                        <label class="cal-icon">Pick-up Date
-                        <input type="text" placeholder="Tue 16 Jan 2018" class="form-control datepicker">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-sec-header">
-                        <h3>Drop-Off Date</h3>
-                        <label class="cal-icon">Pick-up Date
-                        <input type="text" placeholder="Tue 16 Jan 2018" class="form-control datepicker">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="x_slider_select">
-                        <select class="myselect">
-                            <option>09</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                        <i class="fa fa-clock-o"></i>
-                    </div>
-                    <div class="x_slider_select x_slider_select2">
-                        <select class="myselect">
-                            <option>50</option>
-                            <option>40</option>
-                            <option>03</option>
-                            <option>02</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="x_slider_select">
-                        <select class="myselect">
-                            <option>09</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                        <i class="fa fa-clock-o"></i>
-                    </div>
-                    <div class="x_slider_select x_slider_select2">
-                        <select class="myselect">
-                            <option>50</option>
-                            <option>40</option>
-                            <option>03</option>
-                            <option>02</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="x_slider_checkbox_bottom float_left">
-                        <div class="x_slider_checout_left">
-                            <ul>
-                            <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;24/7 Phone Support</li>
-                            <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;No Credit Card Fees</li>
-                            <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;No Amendment Fees</li>
-                            </ul>
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="x_slider_form_input_wrapper float_left">
+                                <h3>Pick-up Location</h3>
+                                
+                                <input type="text" autocomplete="off" id="search" class="full-width" placeholder="enter the city name"/>
+                            </div>
                         </div>
-                        <div class="x_slider_checout_right">
-                            <ul>
-                            <li><a href="#">search <i class="fa fa-arrow-right"></i></a>
-                            </li>
-                            </ul>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="form-sec-header">
+                                <h3>Pick-up Date</h3>
+                                <label class="cal-icon">Pick-up Date
+                                <input type="text" placeholder="Tue 16 Jan 2018" class="form-control datepicker">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="form-sec-header">
+                                <h3>Drop-Off Date</h3>
+                                <label class="cal-icon">Pick-up Date
+                                <input type="text" placeholder="Tue 16 Jan 2018" class="form-control datepicker">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <div class="x_slider_checkbox_bottom float_left">
+                                <div class="x_slider_checout_left">
+                                    <ul>
+                                    <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;24/7 Phone Support</li>
+                                    <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;No Credit Card Fees</li>
+                                    <li><i class="fa fa-check-circle"></i>&nbsp;&nbsp;No Amendment Fees</li>
+                                    </ul>
+                                </div>
+                                <div class="x_slider_checout_right d-flex justify-content-end">
+                                    {{-- <ul>
+                                        <li>
+                                            <a href="#">search <i class="fa fa-arrow-right"></i></a>
+                                        </li>
+                                    </ul> --}}
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        search <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-            </div>
+
+            </form>
         </div>
     </div>
     <!-- xs Slider bottom title Start -->
@@ -790,4 +756,141 @@
         </div>
     </div>
     <!-- x footer Wrapper End -->
+@endsection
+
+@section('script')
+<script src="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/js/autocomplete.min.js"></script>
+
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_MrpX85obMpsk_eEdfE-iPIt06qbHyt0&libraries=places&callback=initAutocomplete" async defer></script> --}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALEY9XSRU4ipaCR1u6iSXdOYmEMU75t8c&libraries=places&callback=initAutocomplete" async defer></script>
+    <script>
+        $(document).ready(function(){
+
+            // minimal configure
+            new Autocomplete("search", {
+            // default selects the first item in
+            // the list of results
+            selectFirst: true,
+
+            // The number of characters entered should start searching
+            howManyCharacters: 2,
+
+            // onSearch
+            onSearch: ({ currentValue }) => {
+                // You can also use static files
+                // const api = '../static/search.json'
+                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(
+                    currentValue
+                )}`;
+
+                /**
+                 * jquery
+                 */
+                // return $.ajax({
+                //     url: api,
+                //     method: 'GET',
+                //   })
+                //   .done(function (data) {
+                //     return data
+                //   })
+                //   .fail(function (xhr) {
+                //     console.error(xhr);
+                //   });
+
+                // OR -------------------------------
+
+                /**
+                 * axios
+                 * If you want to use axios you have to add the
+                 * axios library to head html
+                 * https://cdnjs.com/libraries/axios
+                 */
+                // return axios.get(api)
+                //   .then((response) => {
+                //     return response.data;
+                //   })
+                //   .catch(error => {
+                //     console.log(error);
+                //   });
+
+                // OR -------------------------------
+
+                /**
+                 * Promise
+                 */
+                return new Promise((resolve) => {
+                fetch(api)
+                    .then((response) => response.json())
+                    .then((data) => {
+                    resolve(data.features);
+                    })
+                    .catch((error) => {
+                    console.error(error);
+                    });
+                });
+            },
+            // nominatim GeoJSON format parse this part turns json into the list of
+            // records that appears when you type.
+            onResults: ({ currentValue, matches, template }) => {
+                const regex = new RegExp(currentValue, "gi");
+
+                // if the result returns 0 we
+                // show the no results element
+                return matches === 0
+                ? template
+                : matches
+                    .map((element) => {
+                        return `
+                    <li class="loupe">
+                        <p>
+                        ${element.properties.display_name.replace(
+                            regex,
+                            (str) => `<b>${str}</b>`
+                        )}
+                        </p>
+                    </li> `;
+                    })
+                    .join("");
+            },
+
+            // we add an action to enter or click
+            onSubmit: ({ object }) => {
+                // remove all layers from the map
+                // console.log(object.geometry.coordinates)
+
+                $('#latitude').val(object.geometry.coordinates[1])
+                $('#longitude').val(object.geometry.coordinates[0])
+                map.eachLayer(function (layer) {
+                    if (!!layer.toGeoJSON) {
+                    map.removeLayer(layer);
+                }
+                });
+                
+                const { display_name } = object.properties;
+                const [lng, lat] = object.geometry.coordinates;
+                // console.log(lat+" ------- "+lng)
+
+                const marker = L.marker([lat, lng], {
+                title: display_name,
+                });
+
+                marker.addTo(map).bindPopup(display_name);
+
+                map.setView([lat, lng], 8);
+            },
+
+            // get index and data from li element after
+            // hovering over li with the mouse or using
+            // arrow keys ↓ | ↑
+            onSelectedItem: ({ index, element, object }) => {
+                console.log("onSelectedItem:", index, element, object);
+            },
+
+            // the method presents no results element
+            noResults: ({ currentValue, template }) =>
+                template(`<li>No results found: "${currentValue}"</li>`),
+            });
+
+        })
+    </script>
 @endsection

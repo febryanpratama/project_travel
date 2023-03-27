@@ -36,8 +36,8 @@
                 </li>
                 <li class="login">	<a href="{{ url("auth/admin/login") }}"><i class="fa fa-power-off"></i> &nbsp;&nbsp;login</a>
                 </li>
-                <li class="register">	<a href="{{ url('signup') }}"><i class="fa fa-plus-circle"></i> &nbsp;&nbsp;register</a>
-                </li>
+                {{-- <li class="register">	<a href="{{ url('signup') }}"><i class="fa fa-plus-circle"></i> &nbsp;&nbsp;register</a>
+                </li> --}}
                 <li>
                     <button class="searchd"><i class="fa fa-search"></i>
                     </button>

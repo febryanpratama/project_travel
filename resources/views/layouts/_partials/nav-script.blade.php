@@ -1,4 +1,5 @@
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM&callback=initMap&v=weekly" defer></script>
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFIqcyfKaVoWhs4zGxkxqUaLKWl_e1ZgM&callback=initMap&v=weekly" defer></script> --}}
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&v=weekly" defer></script> --}}
 
 
 <script>

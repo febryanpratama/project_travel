@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -31,6 +32,7 @@ Route::group([
     Route::get('/', 'index');
 
     Route::get('/car/{id}/detail', 'detailCar');
+    Route::post('get-car', 'getCar');
     // Route::get('/car/{id}/rent', 'rentCar');
     Route::post('/car/rent', 'storeRentCar');
 
@@ -49,7 +51,9 @@ Route::group([
 
     // Daftar
     Route::get('/signup', 'signup');
+    Route::get('/signup/company', 'signupCompany');
     Route::post('/signup', 'storeSignup');
+    Route::post('signup-company', 'storeSignupCompany');
 });
 
 
@@ -76,6 +80,13 @@ Route::prefix('admin')->middleware('auth', 'role:Admin')->group(function () {
     });
     // End Category Car
 
+    // Member
+    Route::group([
+        'prefix' => 'members',
+        'controller' => MemberController::class,
+    ], function () {
+        Route::get('/', 'index');
+    });
 });
 
 

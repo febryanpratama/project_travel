@@ -252,7 +252,7 @@
                 </div> --}}
               </div>
               <div class="bs-stepper-content pt-4">
-                <form id="multiStepsForm" method="POST" action="{{ url("signup") }}" enctype="multipart/form-data">
+                <form id="multiStepsForm" method="POST" action="{{ url("signup-company") }}" enctype="multipart/form-data">
                   @csrf
                   <input type="hidden" name="latitude" id="latitude">
                   <input type="hidden" name="longitude" id="longitude">
@@ -264,7 +264,7 @@
                     </div>
                     <div class="row g-3">
                       <div class="col-sm-6">
-                        <label class="form-label" for="multiStepsUsername">Name</label>
+                        <label class="form-label" for="multiStepsUsername">Nama Perusahaan</label>
                         <input type="text" name="name" id="multiStepsUsername" class="form-control"
                           placeholder="johndoe" />
                       </div>
@@ -294,55 +294,12 @@
                               class="bx bx-hide"></i></span>
                         </div>
                       </div>
-                      {{-- <div class="col-md-12">
-                        <label class="form-label" for="multiStepsURL">Profile Link</label>
-                        <input type="text" name="multiStepsURL" id="multiStepsURL" class="form-control"
-                          placeholder="johndoe/profile" aria-label="johndoe" />
-                      </div> --}}
-                      <div class="col-12 d-flex justify-content-between mt-4">
-                        <button class="btn btn-label-secondary btn-prev" disabled>
-                          <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                          <span class="d-sm-inline-block d-none">Previous</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-next">
-                          <span class="d-sm-inline-block d-none me-sm-1 me-0">Next</span>
-                          <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Personal Info -->
-                  <div id="personalInfoValidation" class="content">
-                    <div class="content-header mb-3">
-                      <h4>Personal Information</h4>
-                      <span>Enter Your Personal Information</span>
-                    </div>
-                    <div class="row g-3">
                       <div class="col-sm-6">
-                        <label class="form-label" for="firstname">First Name</label>
-                        <input type="text" id="firstname" name="firstname" class="form-control"
-                          placeholder="John" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="form-label" for="lastname">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" class="form-control"
-                          placeholder="Doe" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="form-label" for="identity_number">Identity Number</label>
+                        <label class="form-label" for="identity_number">Nomor SK Perusahaan</label>
                         <input type="text" id="identity_number" name="identity_number"
                           class="form-control" placeholder="Identity Number" />
                       </div>
-                      <div class="col-sm-6">
-                        <label class="form-label" for="dob">Date Of Birth</label>
-                        <input type="date" id="dob" name="dob"
-                          class="form-control" placeholder="Date Of Birth" maxlength="6" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="form-label" for="pob">Place Of Birth</label>
-                        <input type="text" id="pob" name="pob"
-                          class="form-control" placeholder="Place Of Birth"/>
-                      </div>
+                    
                       <div class="col-sm-6">
                         <label class="form-label" for="pob">State</label>
                         <select name="state" id="state" class="form-control">
@@ -382,10 +339,7 @@
                         <label class="form-label" for="pob">Address</label>
                         <textarea name="address" class="form-control" cols="30" rows="10"></textarea>
                       </div>
-                      <div class="col-sm-12">
-                        <div id='map'></div>
-                      </div>
-                      
+
                       <div class="col-sm-6">
                         <label class="form-label" for="phone_number_1">Phone Number 1</label>
                         <div class="input-group input-group-merge">
@@ -394,18 +348,11 @@
                             class="form-control multi-steps-mobile" placeholder="8123513555" />
                         </div>
                       </div>
-                      <div class="col-sm-6">
-                        <label class="form-label" for="phone_number_1">Phone Number 2</label>
-                        <div class="input-group input-group-merge">
-                          <span class="input-group-text">ID (+62)</span>
-                          <input type="text" id="phone_number_1" name="phone_number_1"
-                            class="form-control multi-steps-mobile" placeholder="8123513555" />
-                        </div>
-                      </div>
+                     
 
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <label class="form-label" for="pob">Photo</label>
-                        <input type="file" name="photo_user" class="form-control dropify">
+                        <input type="file" name="photo_user" class="form-control ">
                       </div>
 
                       <div class="col-12 d-flex justify-content-between mt-4">
@@ -417,118 +364,34 @@
                           Submit
                         </button>
                       </div>
+                      {{-- <div class="col-md-12">
+                        <label class="form-label" for="multiStepsURL">Profile Link</label>
+                        <input type="text" name="multiStepsURL" id="multiStepsURL" class="form-control"
+                          placeholder="johndoe/profile" aria-label="johndoe" />
+                      </div> --}}
+                      {{-- <div class="col-12 d-flex justify-content-between mt-4">
+                        <button class="btn btn-label-secondary btn-prev" disabled>
+                          <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                          <span class="d-sm-inline-block d-none">Previous</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-next">
+                          <span class="d-sm-inline-block d-none me-sm-1 me-0">Next</span>
+                          <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                        </button>
+                      </div> --}}
+                    </div>
+                  </div>
+                  <!-- Personal Info -->
+                  <div id="personalInfoValidation" class="content">
+                    <div class="content-header mb-3">
+                      <h4>Personal Information</h4>
+                      <span>Enter Your Personal Information</span>
+                    </div>
+                    
+                      
                     </div>
                   </div>
                   <!-- Billing Links -->
-                  <div id="billingLinksValidation" class="content">
-                    <div class="content-header mb-3">
-                      <h4>Select Plan</h4>
-                      <span>Select plan as per your requirement</span>
-                    </div>
-                    <!-- Custom plan options -->
-                    <div class="row gap-md-0 gap-3 mb-4">
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="basicOption">
-                            <span class="custom-option-body">
-                              <span class="d-block h4">Basic</span>
-                              <small>A simple start for start ups &
-                                Students</small>
-                              <span class="d-flex justify-content-center">
-                                <sup class="text-primary fs-big lh-1 mt-4">$</sup>
-                                <span class="display-5 h1 fw-normal mb-0 text-primary">0</span>
-                                <span class="mt-auto mb-2">/month</span>
-                              </span>
-                            </span>
-                            <input  class="form-check-input" type="radio" value=""
-                              id="basicOption" />
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="standardOption">
-                            <span class="custom-option-body">
-                              <span class="d-block h4">Standard</span>
-                              <small>For small to medium businesses</small>
-                              <span class="d-flex justify-content-center">
-                                <sup class="text-primary fs-big lh-1 mt-4">$</sup>
-                                <span class="display-5 h1 fw-normal mb-0 text-primary">99</span>
-                                <span class="mt-auto mb-2">/month</span>
-                              </span>
-                            </span>
-                            <input  class="form-check-input" type="radio" value=""
-                              id="standardOption" checked />
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="enterpriseOption">
-                            <span class="custom-option-body">
-                              <span class="d-block h4">Enterprise</span>
-                              <small>Solution for enterprise &
-                                organizations</small>
-                              <span class="d-flex justify-content-center">
-                                <sup class="text-primary fs-big lh-1 mt-4">$</sup>
-                                <span class="display-5 h1 fw-normal mb-0 text-primary">499</span>
-                                <span class="mt-auto mb-2">/year</span>
-                              </span>
-                            </span>
-                        <input  class="form-check-input" type="radio" value=""
-                              id="enterpriseOption" />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <!--/ Custom plan options -->
-                    <div class="content-header mb-3">
-                      <h4 class="mb-0">Payment Information</h4>
-                      <small>Enter your card information</small>
-                    </div>
-                    <!-- Credit Card Details -->
-                    <div class="row g-3">
-                      <div class="col-md-12">
-                        <label class="form-label w-100" for="multiStepsCard">Card Number</label>
-                        <div class="input-group input-group-merge">
-                          <input id="multiStepsCard" class="form-control multi-steps-card" 
-                            type="text" placeholder="1356 3215 6548 7898" aria-describedby="multiStepsCardImg" />
-                          <span class="input-group-text cursor-pointer" id="multiStepsCardImg"><span
-                              class="card-type"></span></span>
-                        </div>
-                      </div>
-                      <div class="col-md-5">
-                        <label class="form-label" for="multiStepsName">Name On Card</label>
-                        <input type="text" id="multiStepsName" class="form-control" 
-                          placeholder="John Doe" />
-                      </div>
-                      <div class="col-6 col-md-4">
-                        <label class="form-label" for="multiStepsExDate">Expiry Date</label>
-                        <input type="text" id="multiStepsExDate" class="form-control multi-steps-exp-date"
-                           placeholder="MM/YY" />
-                      </div>
-                      <div class="col-6 col-md-3">
-                        <label class="form-label" for="multiStepsCvv">CVV Code</label>
-                        <div class="input-group input-group-merge">
-                          <input type="text" id="multiStepsCvv" class="form-control multi-steps-cvv"
-                             maxlength="3" placeholder="654" />
-                          <span class="input-group-text cursor-pointer" id="multiStepsCvvHelp"><i
-                              class="bx bx-help-circle text-muted" data-bs-toggle="tooltip" data-bs-placement="top"
-                              title="Card Verification Value"></i></span>
-                        </div>
-                      </div>
-                      <div class="col-12 d-flex justify-content-between mt-4">
-                        <button class="btn btn-primary btn-prev">
-                          <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                          <span class="d-sm-inline-block d-none">Previous</span>
-                        </button>
-                        <button type="submit" class="btn btn-success btn-next btn-submit">
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                    <!--/ Credit Card Details -->
-                  </div>
                 </form>
               </div>
             </div>
@@ -684,7 +547,7 @@
   </script>
 
 
-  {{-- <script>
+  <script>
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -759,7 +622,7 @@
           }
       })
 
-</script> --}}
+</script>
 </body>
 
 <!-- Mirrored from pixinvent.com/demo/frest-clean-bootstrap-admin-dashboard-template/html/vertical-menu-template-bordered/auth-register-multisteps.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Nov 2022 12:03:05 GMT -->

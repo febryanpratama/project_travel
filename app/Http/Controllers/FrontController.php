@@ -39,6 +39,7 @@ class FrontController extends Controller
         ]);
     }
 
+
     public function storeSignup(Request $request)
     {
         $result = $this->frontService->storeSignup($request->all());
@@ -46,6 +47,27 @@ class FrontController extends Controller
         // dd($result);
         if ($result['status']) {
             return redirect('/auth/admin/login')->with('success', $result['message']);
+        } else {
+            return redirect()->back()->with('error', $result['message']);
+        }
+    }
+
+    public function signupCompany()
+    {
+        $state = DB::table('provinces')->get();
+
+        return view('pages.auth.signup-company', [
+            'state' => $state
+        ]);
+    }
+
+    public function storeSignupCompany(Request $request)
+    {
+        // dd($request->all());
+        $result = $this->frontService->storeSignupCompany($request->all());
+
+        if ($result['status']) {
+            return redirect('auth/admin/login')->with('success', $result['message']);
         } else {
             return redirect()->back()->with('error', $result['message']);
         }
@@ -59,6 +81,18 @@ class FrontController extends Controller
             return view('pages.front.detail-car', ['data' => $result->data]);
         } else {
             abort(404);
+        }
+    }
+
+    public function getCar(Request $request)
+    {
+        // dd($request->all());
+        $result = $this->frontService->getCar($request->all());
+
+        if ($result['status']) {
+            return view('pages.front.list-car', ['data' => $result['data']]);
+        } else {
+            return view('pages.front.list-car', ['data' => []]);
         }
     }
 
